@@ -1,0 +1,42 @@
+{
+  "name": "nuclear-cat/slim-project-skeleton",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.2",
+    "ext-json": "*",
+    "doctrine/annotations": "^1.14",
+    "doctrine/data-fixtures": "^1.6",
+    "doctrine/migrations": "^3.6",
+    "doctrine/orm": "^2.14",
+    "laminas/laminas-config-aggregator": "^1.13",
+    "monolog/monolog": "^3.3",
+    "php-di/php-di": "^7.0",
+    "psr/container": "^1.1",
+    "ramsey/uuid": "^4.7",
+    "slim/psr7": "^1.6",
+    "slim/slim": "4.*",
+    "symfony/cache": "^6.2",
+    "symfony/console": "^6.2"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/",
+      "Share\\": "share/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "App\\Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "qossmic/deptrac-shim": "^1.0",
+    "symfony/var-dumper": "^6.2",
+    "vimeo/psalm": "^5.1"
+  }
+}
