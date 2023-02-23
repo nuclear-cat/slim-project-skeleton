@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Environment;
 use Doctrine\Common\EventManager;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\DBAL\Connection;
@@ -12,12 +11,26 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
 use Doctrine\ORM\ORMSetup;
 use Psr\Container\ContainerInterface;
+use Shared\Environment;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use App\Auth;
 
 return [
     EntityManagerInterface::class => static function (ContainerInterface $container): EntityManagerInterface {
+
+        /**
+         * @psalm-suppress MixedArrayAccess
+         * @var array{
+         *     metadata_dirs:string[],
+         *     dev_mode:bool,
+         *     cache_dir:string,
+         *     proxy_dir:string,
+         *     types:array<string,class-string<Doctrine\DBAL\Types\Type>>,
+         *     subscribers:string[],
+         *     connection:array<string, mixed>
+         * } $settings
+         */
         $settings = $container->get('config')['doctrine'];
 
         $config = ORMSetup::createAttributeMetadataConfiguration(
@@ -43,10 +56,10 @@ return [
             $eventManager->addEventSubscriber($subscriber);
         }
 
-        return EntityManager::create(
-            $settings['connection'],
+        return new EntityManager(
+            $container->get(Connection::class),
             $config,
-            $eventManager
+            $eventManager,
         );
     },
 

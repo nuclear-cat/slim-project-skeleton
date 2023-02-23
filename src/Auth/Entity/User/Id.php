@@ -21,7 +21,7 @@ final readonly class Id
         return new self(Uuid::fromString($string));
     }
 
-    public static function create(): self
+    public static function createNew(): self
     {
         return new self(Uuid::uuid7());
     }

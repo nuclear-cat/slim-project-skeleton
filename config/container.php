@@ -1,10 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use DI\ContainerBuilder;
 
 $builder = new ContainerBuilder();
-
-$configs = require __DIR__ . '/dependencies.php';
 
 $builder->addDefinitions(require __DIR__ . '/dependencies.php');
 

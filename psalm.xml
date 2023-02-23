@@ -1,23 +1,31 @@
 <?xml version="1.0"?>
 <psalm
     errorLevel="1"
-    resolveFromConfigFile="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     cacheDirectory="./var/cache/.psalm"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="true"
 >
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
         <pluginClass class="Lctrs\PsalmPsrContainerPlugin\Plugin"/>
     </plugins>
 
+    <forbiddenFunctions>
+        <function name="exit"/>
+        <function name="die"/>
+        <function name="dump"/>
+    </forbiddenFunctions>
+
     <projectFiles>
-        <directory name="bin"/>
-        <directory name="config"/>
-        <directory name="public"/>
+<!--        <directory name="bin"/>-->
+<!--        <directory name="config"/>-->
+<!--        <directory name="public"/>-->
+<!--        <directory name="shared"/>-->
         <directory name="src"/>
-        <directory name="tests"/>
+<!--        <directory name="tests"/>-->
         <ignoreFiles>
             <directory name="vendor"/>
         </ignoreFiles>
@@ -25,5 +33,7 @@
 
     <issueHandlers>
         <LessSpecificReturnType errorLevel="info"/>
+        <UnusedBaselineEntry errorLevel="info"/>
+        <PossiblyUnusedMethod errorLevel="info"/>
     </issueHandlers>
 </psalm>

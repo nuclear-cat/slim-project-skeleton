@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
+<?php
 
-use App\Environment;
+declare(strict_types=1);
+
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
+use Shared\Environment;
 
 $aggregator = new ConfigAggregator([
     new PhpFileProvider(__DIR__ . '/common/*.php'),

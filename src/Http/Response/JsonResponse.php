@@ -1,22 +1,24 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Response;
 
-use Nyholm\Psr7\Response;
+use Slim\Psr7\Factory\StreamFactory;
+use Slim\Psr7\Headers;
+use Slim\Psr7\Response;
 
 final class JsonResponse extends Response
 {
     /**
      * @throws \JsonException
      */
-    public function __construct(
-        array|object $data,
-        int          $status = 200,
-    ) {
+    public function __construct(mixed $data, int $status = 200)
+    {
         parent::__construct(
             $status,
-            ['Content-Type' => 'application/json',],
-            json_encode($data, JSON_THROW_ON_ERROR),
+            new Headers(['Content-Type' => 'application/json']),
+            (new StreamFactory())->createStream(json_encode($data, JSON_THROW_ON_ERROR))
         );
     }
 }

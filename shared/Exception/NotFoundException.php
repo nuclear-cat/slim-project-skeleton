@@ -1,6 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Share\Exception;
+declare(strict_types=1);
+
+namespace Shared\Exception;
 
 use DomainException;
 

@@ -1,42 +1,61 @@
 {
-  "name": "nuclear-cat/slim-project-skeleton",
-  "type": "project",
-  "license": "MIT",
-  "require": {
-    "php": ">=8.2",
-    "ext-json": "*",
-    "doctrine/annotations": "^1.14",
-    "doctrine/data-fixtures": "^1.6",
-    "doctrine/migrations": "^3.6",
-    "doctrine/orm": "^2.14",
-    "laminas/laminas-config-aggregator": "^1.13",
-    "monolog/monolog": "^3.3",
-    "php-di/php-di": "^7.0",
-    "psr/container": "^1.1",
-    "ramsey/uuid": "^4.7",
-    "slim/psr7": "^1.6",
-    "slim/slim": "4.*",
-    "symfony/cache": "^6.2",
-    "symfony/console": "^6.2"
-  },
-  "config": {
-    "optimize-autoloader": true,
-    "sort-packages": true
-  },
-  "autoload": {
-    "psr-4": {
-      "App\\": "src/",
-      "Share\\": "share/"
+    "name": "nuclear-cat/slim-project-skeleton",
+    "description": "Slim Project Skeleton",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.2",
+        "ext-json": "*",
+        "doctrine/annotations": "^1.14",
+        "doctrine/migrations": "^3.6",
+        "doctrine/orm": "^2.14",
+        "laminas/laminas-config-aggregator": "^1.13",
+        "monolog/monolog": "^3.3",
+        "php-di/php-di": "^7.0",
+        "psr/container": "^1.1",
+        "ramsey/uuid": "^4.7",
+        "slim/psr7": "^1.6",
+        "slim/slim": "4.*",
+        "symfony/cache": "^6.2",
+        "symfony/console": "^6.2"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "infection/extension-installer": true,
+            "composer/package-versions-deprecated": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Shared\\": "shared/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "doctrine/data-fixtures": "^1.6",
+        "qossmic/deptrac-shim": "^1.0",
+        "symfony/var-dumper": "^6.2",
+        "vimeo/psalm": "^5.1",
+        "jetbrains/phpstorm-attributes": "^1.0",
+        "maglnet/composer-require-checker": "^4.5",
+        "phpunit/phpunit": "^10.0",
+        "roave/infection-static-analysis-plugin": "^1.25",
+        "rector/rector": "^0.15.0",
+        "overtrue/phplint": "^9.0",
+        "roave/security-advisories": "dev-latest",
+        "lctrs/psalm-psr-container-plugin": "^1.9",
+        "psalm/plugin-phpunit": "^0.18"
+    },
+    "scripts": {
+        "lint": "phplint",
+        "test": "phpunit --testdox --no-interaction",
+        "psalm": "psalm --config=psalm.xml"
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "App\\Tests\\": "tests/"
-    }
-  },
-  "require-dev": {
-    "qossmic/deptrac-shim": "^1.0",
-    "symfony/var-dumper": "^6.2",
-    "vimeo/psalm": "^5.1"
-  }
 }

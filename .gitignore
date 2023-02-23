@@ -1,1 +1,6 @@
+/.idea/
 /vendor
+/.phplint.cache/
+/var/
+/phpcs.xml
+/.phpunit.result.cache
