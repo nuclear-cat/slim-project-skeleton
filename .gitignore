@@ -1,6 +1,8 @@
 /.idea/
+/.stuff/
 /vendor
 /.phplint.cache/
 /var/
 /phpcs.xml
 /.phpunit.result.cache
+/.deptrac.cache

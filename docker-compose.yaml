@@ -1,0 +1,48 @@
+version: '3.9'
+
+x-db-variables: &db-variables
+   DB_HOST: ${COMPOSE_PROJECT_NAME}-postgresql
+   DB_USER: user
+   DB_PASSWORD: password
+   DB_NAME: db
+
+services:
+   php-cli:
+      container_name: ${COMPOSE_PROJECT_NAME}-php-cli
+      build:
+         context: ./docker/dev/
+         dockerfile: php-cli/Dockerfile
+      depends_on:
+         postgresql:
+            condition: service_healthy
+      volumes:
+         - ./:/app
+      working_dir: /app/backend
+      networks:
+         - slim-project-skeleton
+      environment:
+         <<: *db-variables
+         APP_ENV: dev
+         APP_DEBUG: 1
+
+   postgresql:
+      container_name: ${COMPOSE_PROJECT_NAME}-postgresql
+      image: postgres:15.2-alpine
+      environment:
+         POSTGRES_USER: user
+         POSTGRES_PASSWORD: password
+         POSTGRES_DB: db
+      ports:
+         - '9202:5432'
+      networks:
+         - slim-project-skeleton
+      healthcheck:
+         test: ['CMD-SHELL', 'pg_isready', '-d', 'db']
+         interval: 5s
+         timeout: 5s
+         retries: 5
+
+networks:
+   slim-project-skeleton:
+      name: slim-project-skeleton
+      driver: bridge

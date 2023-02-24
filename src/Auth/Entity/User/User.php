@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Auth\Entity\User;
 
 use App\Auth\DBAL\User\IdType;
+use App\Auth\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'auth_users')]
 final class User
 {

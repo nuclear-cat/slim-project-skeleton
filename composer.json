@@ -17,7 +17,8 @@
         "slim/psr7": "^1.6",
         "slim/slim": "4.*",
         "symfony/cache": "^6.2",
-        "symfony/console": "^6.2"
+        "symfony/console": "^6.2",
+        "webmozart/assert": "^1.11"
     },
     "config": {
         "optimize-autoloader": true,
@@ -42,20 +43,25 @@
         "doctrine/data-fixtures": "^1.6",
         "qossmic/deptrac-shim": "^1.0",
         "symfony/var-dumper": "^6.2",
-        "vimeo/psalm": "^5.1",
+        "vimeo/psalm": "^5.7",
         "jetbrains/phpstorm-attributes": "^1.0",
         "maglnet/composer-require-checker": "^4.5",
         "phpunit/phpunit": "^10.0",
-        "roave/infection-static-analysis-plugin": "^1.25",
+        "roave/infection-static-analysis-plugin": "^1.26",
         "rector/rector": "^0.15.0",
         "overtrue/phplint": "^9.0",
         "roave/security-advisories": "dev-latest",
         "lctrs/psalm-psr-container-plugin": "^1.9",
-        "psalm/plugin-phpunit": "^0.18"
+        "psalm/plugin-phpunit": "^0.18",
+        "infection/infection": "0.26"
     },
     "scripts": {
         "lint": "phplint",
-        "test": "phpunit --testdox --no-interaction",
-        "psalm": "psalm --config=psalm.xml"
+        "test": "phpunit --testdox",
+        "psalm": "psalm --config=psalm.xml",
+        "deptrac-layers": "deptrac analyze --config-file=deptrac-layers.yaml",
+        "infection": "infection",
+        "infection-covered": "infection --only-covered",
+        "test-coverage": "XDEBUG_MODE=coverage phpunit --colors=always --coverage-html var/test/coverage"
     }
 }

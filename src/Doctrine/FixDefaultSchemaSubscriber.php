@@ -12,6 +12,9 @@ use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
 use Doctrine\ORM\Tools\ToolEvents;
 
+/**
+ * @psalm-suppress UnusedClass
+ */
 final class FixDefaultSchemaSubscriber implements EventSubscriber
 {
     public function getSubscribedEvents(): array

@@ -17,6 +17,11 @@
         <function name="exit"/>
         <function name="die"/>
         <function name="dump"/>
+        <function name="sleep"/>
+        <function name="var_dump"/>
+        <function name="echo"/>
+        <function name="print"/>
+        <function name="print_r"/>
     </forbiddenFunctions>
 
     <projectFiles>

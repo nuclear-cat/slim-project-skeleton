@@ -1,0 +1,22 @@
+{
+    "timeout": 10,
+    "source": {
+        "directories": ["src"]
+    },
+    "logs": {
+        "text": "var/test/infection/infection.log",
+        "html": "var/test/infection/index.html",
+        "summary": "var/test/infection/summary.log",
+        "perMutator": "var/test/infection/per-mutator.md"
+    },
+    "tmpDir": "./var/infection",
+    "mutators": {
+        "@default": true,
+        "@function_signature": true,
+        "UnwrapSubstr": {},
+        "GreaterThan": {},
+        "LogicalNot": {},
+        "CastInt": {},
+    },
+    "testFramework": "phpunit"
+}
