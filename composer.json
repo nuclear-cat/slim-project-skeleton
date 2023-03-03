@@ -29,6 +29,9 @@
         }
     },
     "autoload": {
+        "files": [
+            "src/env.php"
+        ],
         "psr-4": {
             "App\\": "src/",
             "Shared\\": "shared/"

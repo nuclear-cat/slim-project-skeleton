@@ -11,10 +11,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
 use Doctrine\ORM\ORMSetup;
 use Psr\Container\ContainerInterface;
-use Shared\Environment;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use App\Auth;
+use function App\env;
 
 return [
     EntityManagerInterface::class => static function (ContainerInterface $container): EntityManagerInterface {
@@ -77,10 +77,10 @@ return [
             'proxy_dir'     => __DIR__ . '/../../var/cache/doctrine/proxy',
             'connection'    => [
                 'driver'   => 'pdo_pgsql',
-                'host'     => Environment::load('DB_HOST'),
-                'user'     => Environment::load('DB_USER'),
-                'password' => Environment::load('DB_PASSWORD'),
-                'dbname'   => Environment::load('DB_NAME'),
+                'host'     => env('DB_HOST'),
+                'user'     => env('DB_USER'),
+                'password' => env('DB_PASSWORD'),
+                'dbname'   => env('DB_NAME'),
                 'charset'  => 'utf-8',
             ],
             'metadata_dirs' => [
