@@ -1,5 +1,10 @@
 version: '3.9'
 
+x-mode-variables: &mode-variables
+   APP_ENV: dev
+   APP_DEBUG: 1
+   PHP_IDE_CONFIG: 'serverName=user-manager.test'
+
 x-db-variables: &db-variables
    DB_HOST: ${COMPOSE_PROJECT_NAME}-postgresql
    DB_USER: user
@@ -7,6 +12,39 @@ x-db-variables: &db-variables
    DB_NAME: db
 
 services:
+   nginx:
+      container_name: ${COMPOSE_PROJECT_NAME}-nginx
+      build:
+         context: ./docker/dev
+         dockerfile: nginx/Dockerfile
+      volumes:
+         - ./:/app
+      depends_on:
+         php-fpm:
+            condition: service_started
+      ports:
+         - '9301:81'
+      networks:
+         - main-network
+
+   php-fpm:
+      container_name: ${COMPOSE_PROJECT_NAME}-php-fpm
+      build:
+         context: ./docker/dev
+         dockerfile: php-fpm/Dockerfile
+      depends_on:
+         postgresql:
+            condition: service_healthy
+      volumes:
+         - ./:/app
+         - ./docker/dev/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      working_dir: /app
+      networks:
+         - main-network
+      environment:
+         <<: *db-variables
+         <<: *mode-variables
+
    php-cli:
       container_name: ${COMPOSE_PROJECT_NAME}-php-cli
       build:
@@ -19,11 +57,10 @@ services:
          - ./:/app
       working_dir: /app/backend
       networks:
-         - slim-project-skeleton
+         - main-network
       environment:
          <<: *db-variables
-         APP_ENV: dev
-         APP_DEBUG: 1
+         <<: *mode-variables
 
    postgresql:
       container_name: ${COMPOSE_PROJECT_NAME}-postgresql
@@ -35,7 +72,7 @@ services:
       ports:
          - '9202:5432'
       networks:
-         - slim-project-skeleton
+         - main-network
       healthcheck:
          test: ['CMD-SHELL', 'pg_isready', '-d', 'db']
          interval: 5s
@@ -43,6 +80,6 @@ services:
          retries: 5
 
 networks:
-   slim-project-skeleton:
-      name: slim-project-skeleton
+   main-network:
+      name: ${COMPOSE_PROJECT_NAME}-network
       driver: bridge

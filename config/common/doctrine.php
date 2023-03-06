@@ -5,6 +5,8 @@ declare(strict_types=1);
 use Doctrine\Common\EventManager;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver;
+use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -64,27 +66,40 @@ return [
     },
 
     Connection::class => static function (ContainerInterface $container): Connection {
-        $em = $container->get(EntityManagerInterface::class);
 
-        return $em->getConnection();
+        /**
+         * @psalm-suppress MixedArrayAccess
+         * @var array{
+         *     driver:string,
+         *     host:string,
+         *     user:string,
+         *     password:string,
+         *     dbname:string,
+         *     charset:string,
+         * } $params
+         */
+        $params = $container->get('config')['connection'];
+
+        return DriverManager::getConnection($params);
     },
 
     'config' => [
-        'doctrine' => [
+        'connection' => [
+            'driver'   => 'pdo_pgsql',
+            'host'     => env('DB_HOST'),
+            'user'     => env('DB_USER'),
+            'password' => env('DB_PASSWORD'),
+            'dbname'   => env('DB_NAME'),
+            'charset'  => 'utf-8',
+        ],
+        'doctrine'   => [
             'dev_mode'      => false,
             'subscribers'   => [],
             'cache_dir'     => __DIR__ . '/../../var/cache/doctrine/cache',
             'proxy_dir'     => __DIR__ . '/../../var/cache/doctrine/proxy',
-            'connection'    => [
-                'driver'   => 'pdo_pgsql',
-                'host'     => env('DB_HOST'),
-                'user'     => env('DB_USER'),
-                'password' => env('DB_PASSWORD'),
-                'dbname'   => env('DB_NAME'),
-                'charset'  => 'utf-8',
-            ],
             'metadata_dirs' => [
                 __DIR__ . '/../../src/Auth/Entity',
+                __DIR__ . '/../../src/OAuth2/Entity',
             ],
             'types'         => [
                 Auth\DBAL\User\IdType::NAME => Auth\DBAL\User\IdType::class,

@@ -23,6 +23,9 @@ final class User
     #[ORM\Column(type: "datetime_immutable")]
     private \DateTimeImmutable $createdAt;
 
+    #[ORM\Column(name: 'status', type: 'auth_user_status', nullable: false)]
+    private Status $status;
+
     public function __construct(
         Id                 $id,
         string             $name,
@@ -31,6 +34,8 @@ final class User
         $this->id        = $id;
         $this->name      = $name;
         $this->createdAt = $createdAt;
+
+        $this->status = Status::Wait;
     }
 
     public function getId(): Id
@@ -46,5 +51,17 @@ final class User
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function getStatus(): Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(Status $status): self
+    {
+        $this->status = $status;
+
+        return $this;
     }
 }
