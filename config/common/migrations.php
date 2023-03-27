@@ -19,6 +19,7 @@ return [
         );
         $configuration->setAllOrNothing(true);
         $configuration->setCheckDatabasePlatform(false);
+        $configuration->setCustomTemplate( __DIR__ . '/../dev/doctrine_migrations_class.php.tpl');
 
         $storageConfiguration = new Migrations\Metadata\Storage\TableMetadataStorageConfiguration();
         $storageConfiguration->setTableName('migrations');

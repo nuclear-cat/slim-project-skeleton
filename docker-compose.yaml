@@ -23,7 +23,7 @@ services:
          php-fpm:
             condition: service_started
       ports:
-         - '9301:81'
+         - '${DOCKER_NGINX_PORT}:81'
       networks:
          - main-network
 
@@ -70,7 +70,7 @@ services:
          POSTGRES_PASSWORD: password
          POSTGRES_DB: db
       ports:
-         - '9202:5432'
+         - '${DOCKER_POSTRESQL_PORT}:5432'
       networks:
          - main-network
       healthcheck:

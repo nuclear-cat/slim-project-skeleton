@@ -5,9 +5,9 @@ declare(strict_types=1);
 use Doctrine\Common\EventManager;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Driver;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
@@ -85,12 +85,15 @@ return [
 
     'config' => [
         'connection' => [
-            'driver'   => 'pdo_pgsql',
-            'host'     => env('DB_HOST'),
-            'user'     => env('DB_USER'),
-            'password' => env('DB_PASSWORD'),
-            'dbname'   => env('DB_NAME'),
-            'charset'  => 'utf-8',
+            'driver'        => 'pdo_pgsql',
+            'host'          => env('DB_HOST'),
+            'user'          => env('DB_USER'),
+            'password'      => env('DB_PASSWORD'),
+            'dbname'        => env('DB_NAME'),
+            'charset'       => 'utf-8',
+            'mapping_types' => [
+                Auth\DBAL\User\StatusType::NAME => Types::STRING,
+            ],
         ],
         'doctrine'   => [
             'dev_mode'      => false,
@@ -99,10 +102,10 @@ return [
             'proxy_dir'     => __DIR__ . '/../../var/cache/doctrine/proxy',
             'metadata_dirs' => [
                 __DIR__ . '/../../src/Auth/Entity',
-                __DIR__ . '/../../src/OAuth2/Entity',
             ],
             'types'         => [
-                Auth\DBAL\User\IdType::NAME => Auth\DBAL\User\IdType::class,
+                Auth\DBAL\User\IdType::NAME     => Auth\DBAL\User\IdType::class,
+                Auth\DBAL\User\StatusType::NAME => Auth\DBAL\User\StatusType::class,
             ],
         ],
     ],
